@@ -47,17 +47,17 @@ export function PortfolioShell() {
           }}
           onClick={transitionToContent}
         >
-          <motion.div
-            animate={{ scale: isLanding ? 1 : 0.25 }}
-            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+          <div
             style={{
               width: 'min(50vw, 400px)',
               height: 'min(50vw, 400px)',
+              transform: isLanding ? 'scale(1)' : 'scale(0.25)',
               transformOrigin: 'top left',
+              transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           >
             {mounted && <SphereCanvas />}
-          </motion.div>
+          </div>
         </div>
 
         <AnimatePresence mode="wait">
