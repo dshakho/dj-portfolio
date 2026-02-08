@@ -3,8 +3,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 // mock SphereCanvas since it needs webgl
 vi.mock('@/components/sphere/SphereCanvas', () => ({
-  SphereCanvas: ({ onClick }: { onClick?: () => void }) => (
-    <div data-testid="sphere-canvas" onClick={onClick} />
+  SphereCanvas: () => (
+    <div data-testid="sphere-canvas" />
   ),
 }))
 
@@ -28,6 +28,7 @@ vi.mock('motion/react', () => ({
   motion: {
     div: createMotionElement('div'),
     p: createMotionElement('p'),
+    nav: createMotionElement('nav'),
     span: createMotionElement('span'),
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => (
@@ -78,12 +79,25 @@ describe('PortfolioShell', () => {
     expect(screen.getByRole('navigation')).toBeInTheDocument()
   })
 
-  it('transitions early on sphere click', () => {
+  it('transitions early on sphere wrapper click', () => {
     renderShell()
 
-    fireEvent.click(screen.getByTestId('sphere-canvas'))
+    // click the wrapper div around the sphere (fallback for r3f click)
+    fireEvent.click(screen.getByTestId('sphere-canvas').parentElement!)
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
+  })
+
+  it('keeps sphere visible after transition', async () => {
+    renderShell()
+    expect(screen.getByTestId('sphere-canvas')).toBeInTheDocument()
+
+    await act(async () => {
+      vi.advanceTimersByTime(3600)
+    })
+
+    // same sphere instance stays mounted
+    expect(screen.getByTestId('sphere-canvas')).toBeInTheDocument()
   })
 
   it('shows footer in both states', async () => {
