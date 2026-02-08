@@ -31,19 +31,34 @@ export function PortfolioShell() {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
-      <div className={`flex shrink-0 flex-col items-center ${isLanding ? 'flex-1 justify-center' : 'pt-4'}`}>
-        <motion.div
-          layout
-          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+      <div
+        className="flex shrink-0 flex-col items-center"
+        style={{
+          marginTop: isLanding ? 'calc(50dvh - min(25vw, 200px) - 30px)' : '16px',
+          transition: 'margin-top 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
+        <div
           className="cursor-pointer"
           style={{
             width: isLanding ? 'min(50vw, 400px)' : '100px',
             height: isLanding ? 'min(50vw, 400px)' : '100px',
+            transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1), height 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
           onClick={transitionToContent}
         >
-          {mounted && <SphereCanvas />}
-        </motion.div>
+          <motion.div
+            animate={{ scale: isLanding ? 1 : 0.25 }}
+            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            style={{
+              width: 'min(50vw, 400px)',
+              height: 'min(50vw, 400px)',
+              transformOrigin: 'top left',
+            }}
+          >
+            {mounted && <SphereCanvas />}
+          </motion.div>
+        </div>
 
         <AnimatePresence mode="wait">
           {isLanding ? (
