@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__context7__resolve-library-id",
+      "Bash(./convert_jvc.sh:*)",
+      "WebSearch"
+    ],
+    "deny": []
+  },
+  "mcpServers": {
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena.git",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "."
+      ]
+    },
+    "context7": {
+      "command": "c7",
+      "args": [
+        "mcp"
+      ]
+    },
+    "AbletonMCP": {
+      "command": "uvx",
+      "args": [
+        "ableton-mcp"
+      ]
+    }
+  }
+}
