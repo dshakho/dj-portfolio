@@ -9,10 +9,9 @@ import { useExplosion } from './useExplosion'
 
 interface SphereProps {
   scale?: number
-  onClick?: () => void
 }
 
-export function Sphere({ scale = 1, onClick }: SphereProps) {
+export function Sphere({ scale = 1 }: SphereProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef<THREE.ShaderMaterial>(null)
 
@@ -36,17 +35,10 @@ export function Sphere({ scale = 1, onClick }: SphereProps) {
     }
   })
 
-  const handleClick = () => {
-    triggerExplosion()
-    onClick?.()
-  }
-
   return (
     <group scale={scale}>
       <mesh
         ref={meshRef}
-        onClick={handleClick}
-        visible={!isExploding}
       >
         <icosahedronGeometry args={[1, 64]} />
         <shaderMaterial
